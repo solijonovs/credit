@@ -23,10 +23,95 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
 
 
-// Add your functions below:
+//Task 1
+function validateCred(arr) {
+    let total = 0;
+    for(let i = arr.length - 1; i >= 0; i--){
+        let currValue = arr[i];
+        if((arr.length - 1 - i) % 2 === 1) {
+            currValue *=2;
+            if(currValue > 9) {
+                currValue -=9;
+            }
+        }
+        total += currValue;
+    }
+    return total % 10 === 0;
+}
+
+//test function
+/*
+console.log(validateCred(valid1));
+console.log(validateCred(valid2));
+console.log(validateCred(valid3));
+console.log(validateCred(valid4));
+console.log(validateCred(valid5));
+console.log(validateCred(invalid1));
+console.log(validateCred(invalid2));
+console.log(validateCred(invalid3));
+console.log(validateCred(invalid4));
+console.log(validateCred(invalid5));
+*/
 
 
+//Task 2
+function findInvalidCards(cards) {
+    let invalid = [];
 
+    for(let i = 0; i < cards.length; i++) {
+        let currCred = cards[i];
+        if(!validateCred(currCred)) {
+            invalid.push(currCred);
+        }
+    }
+    return invalid;
+}
+
+
+//test function
+/*
+console.log(findInvalidCards([valid1, valid2, valid3, valid4, valid5]));
+console.log(findInvalidCards([invalid1, invalid2, invalid3, invalid4, invalid5]));
+
+console.log(findInvalidCards(batch));
+*/
+
+//Task 3
+function idInvalidCardCompanies(arr) {
+    let list = [];
+
+    for(let i = 0; i < arr.length; i++) {
+        switch(arr[i][0]) {
+            case 3:
+                if (!list.includes('Amex')) {
+                    list.push('Amex');
+                }
+                break;
+            case 4:
+                if (!list.includes('Visa')) {
+                    list.push('Visa');
+                }
+                break;
+            case 5:
+                if (!list.includes('Mastercard')) {
+                    list.push('Mastercard');
+                }
+                break;
+            case 6:
+                if (!list.includes('Discover')) {
+                    list.push('Discover');
+                }
+                break;
+            default:
+                console.log('Company not found');
+        }
+    }
+    return list;
+}
+
+console.log(idInvalidCardCompanies([invalid1])); // Should print['visa']
+console.log(idInvalidCardCompanies([invalid2])); // Should print ['mastercard']
+console.log(idInvalidCardCompanies(batch)); // Find out which companies have mailed out invalid cards
 
 
 
